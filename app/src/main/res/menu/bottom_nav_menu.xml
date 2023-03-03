@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/list_open"
+        android:icon="@drawable/baseline_featured_list_24"
+        android:title="@string/list"/>
+
+    <item
+        android:id="@+id/insert_open"
+        android:icon="@drawable/baseline_add_24"
+        android:title="@string/add"/>
+
+</menu>
