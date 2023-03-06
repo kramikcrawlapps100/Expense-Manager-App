@@ -13,22 +13,30 @@ import com.example.expensemanagerapp.fragments.ListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    ActivityMainBinding binding;
-    ListFragment listFragment;
-    InsertFragment insertFragment;
+    private ActivityMainBinding binding;
+    private ListFragment listFragment;
+    private InsertFragment insertFragment;
 
-    SharedPreferences sharedPreferences;
+    public SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initialization();
+        setDefaultNavigation();
+    }
+
+    private void setDefaultNavigation() {
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        navigateListFragment();
+    }
+
+    private void initialization() {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         listFragment = new ListFragment();
         insertFragment = new InsertFragment();
-
-        binding.bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        binding.bottomNavigationView.setSelectedItemId(R.id.list_open);
     }
 
     @Override
@@ -46,13 +54,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         return false;
     }
 
-    public void performStreamClick(){
+    public void navigateListFragment(){
         binding.bottomNavigationView.setSelectedItemId(R.id.list_open);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
     }
 }
