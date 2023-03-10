@@ -2,6 +2,8 @@ package com.example.expensemanagerapp.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.database.ContentObserver;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,8 +20,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.expensemanagerapp.MainActivity;
 import com.example.expensemanagerapp.R;
+import com.example.expensemanagerapp.database.DatabaseHelper;
 import com.example.expensemanagerapp.model.Expense;
 import com.example.expensemanagerapp.viewmodel.ExpenseViewModel;
+
+import java.util.ArrayList;
 
 public class InsertFragment extends Fragment {
 
@@ -27,14 +32,15 @@ public class InsertFragment extends Fragment {
     private EditText amountEditText,noteEditText;
     private RadioButton debitButton,creditButton;
     private Button saveButton;
-    private ExpenseViewModel viewModel;
 
     private int amount = 0;
     private String note = "";
-    private boolean transactionType = false;
+    private int transactionType = 0;
 
     private Activity a;
-    private int total;
+    private int total = 0;
+
+    private DatabaseHelper databaseHelper;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -50,8 +56,12 @@ public class InsertFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_insert, container, false);
         initialization();
-        total = viewModel.getTotal();
-
+        ArrayList<Expense> expenseArrayList = databaseHelper.getAllExpenses();
+        if(expenseArrayList != null){
+            for(Expense expense : expenseArrayList){
+                total += expense.getAmount();
+            }
+        }
         saveButton.setOnClickListener(v->{
             if(!validation(amountEditText, noteEditText)){
                 return;
@@ -59,9 +69,16 @@ public class InsertFragment extends Fragment {
 
             amount = Integer.parseInt(amountEditText.getText().toString());
             note = noteEditText.getText().toString();
-            transactionType = debitButton.isChecked();
+            Boolean transactionTypeBoolean = debitButton.isChecked();
+            if(transactionTypeBoolean){
+                transactionType = 1;
+            }
+            else {
+                transactionType = 0;
+            }
 
-            if(transactionType){
+
+            if(transactionTypeBoolean){
                 amount = -amount;
             }
             if((total+amount) < 0) {
@@ -71,7 +88,7 @@ public class InsertFragment extends Fragment {
 
             insertExpense(amount,note,transactionType);
             clearFields();
-            ((MainActivity)a).navigateListFragment();
+
         });
         return view;
     }
@@ -107,17 +124,18 @@ public class InsertFragment extends Fragment {
     }
 
     private void initialization() {
-        requireActivity().setTitle("Add");
         amountEditText = view.findViewById(R.id.amountEditText);
         noteEditText = view.findViewById(R.id.noteEditText);
         debitButton = view.findViewById(R.id.debitButton);
         creditButton = view.findViewById(R.id.creditButton);
         saveButton = view.findViewById(R.id.saveButton);
-        viewModel = new ViewModelProvider(this).get(ExpenseViewModel.class);
+        databaseHelper = new DatabaseHelper(a);
     }
 
-    private void insertExpense(int amount, String note, boolean transactionType) {
-        Expense expense = new Expense(amount,note,transactionType);
-        viewModel.setExpenseList(expense);
+    private void insertExpense(int amount, String note, int transactionType) {
+        Expense expense = new Expense(amount, note, transactionType);
+        databaseHelper.insertExpense(expense);
+
     }
+
 }

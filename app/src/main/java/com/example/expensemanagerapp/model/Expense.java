@@ -2,14 +2,49 @@ package com.example.expensemanagerapp.model;
 
 public class Expense {
 
+    public static final String TABLE_NAME = "expenses";
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_AMOUNT = "amount";
+    public static final String COLUMN_NOTE = "note";
+    public static final String COLUMN_TRANSACTIONTYPE = "transactionType";
+
+    // Create table SQL query
+    public static final String CREATE_TABLE =
+            "CREATE TABLE " + TABLE_NAME + "("
+                    + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + COLUMN_AMOUNT + " INTEGER,"
+                    + COLUMN_NOTE + " TEXT,"
+                    + COLUMN_TRANSACTIONTYPE + " INTEGER"
+                    + ")";
+
+
+    private int id;
     private int amount;
     private String note;
-    private Boolean transactionType;
+    private int transactionType;
 
-    public Expense(int amount, String note, Boolean transactionType) {
+    public Expense() {
+    }
+
+    public Expense(int amount, String note, int transactionType) {
         this.amount = amount;
         this.note = note;
         this.transactionType = transactionType;
+    }
+
+    public Expense(int id, int amount, String note, int transactionType) {
+        this.id = id;
+        this.amount = amount;
+        this.note = note;
+        this.transactionType = transactionType;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getAmount() {
@@ -28,11 +63,11 @@ public class Expense {
         this.note = note;
     }
 
-    public Boolean getTransactionType() {
+    public int getTransactionType() {
         return transactionType;
     }
 
-    public void setTransactionType(Boolean transactionType) {
+    public void setTransactionType(int transactionType) {
         this.transactionType = transactionType;
     }
 }
