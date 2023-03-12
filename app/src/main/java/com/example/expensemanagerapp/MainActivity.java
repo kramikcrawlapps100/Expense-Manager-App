@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -21,14 +22,10 @@ public class MainActivity extends AppCompatActivity {
     private InsertFragment insertFragment;
     private SharedPreferences sharedPreferences;
 
-    private DatabaseContentObserver observer;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initialization();
-        observer = new DatabaseContentObserver(this);
-        getContentResolver().registerContentObserver(MyContentProvider.URI, true, observer);
     }
 
 

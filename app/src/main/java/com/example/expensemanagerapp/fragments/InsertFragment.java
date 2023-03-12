@@ -1,6 +1,7 @@
 package com.example.expensemanagerapp.fragments;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
@@ -18,7 +19,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.expensemanagerapp.DatabaseContentObserver;
 import com.example.expensemanagerapp.MainActivity;
+import com.example.expensemanagerapp.MyContentProvider;
 import com.example.expensemanagerapp.R;
 import com.example.expensemanagerapp.database.DatabaseHelper;
 import com.example.expensemanagerapp.model.Expense;
@@ -135,7 +138,6 @@ public class InsertFragment extends Fragment {
     private void insertExpense(int amount, String note, int transactionType) {
         Expense expense = new Expense(amount, note, transactionType);
         databaseHelper.insertExpense(expense);
-
     }
 
 }
