@@ -1,11 +1,8 @@
 package com.example.expensemanagerapp.adapter;
 
-import android.app.Dialog;
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.expensemanagerapp.R;
@@ -30,8 +27,8 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 
     private final Context context;
     private ArrayList<Expense> expenseArrayList;
-    private DatabaseHelper databaseHelper;
-    private TextView totalTextView;
+    private final DatabaseHelper databaseHelper;
+    private final TextView totalTextView;
 
     public ExpenseAdapter(Context context, ArrayList<Expense> expenseArrayList,TextView totalTextView) {
         this.context = context;
@@ -45,8 +42,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
     public ExpenseAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem= layoutInflater.inflate(R.layout.list_item, parent, false);
-        ViewHolder viewHolder = new ViewHolder(listItem);
-        return viewHolder;
+        return new ViewHolder(listItem);
     }
 
     @Override
@@ -56,10 +52,10 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
     holder.noteItemTextview.setText(expense.getNote());
 
     if(expense.getTransactionType() == 1){
-        holder.amountItemTextview.setTextColor(context.getResources().getColor(R.color.red));
+        holder.amountItemTextview.setTextColor(ContextCompat.getColor(context,R.color.red));
     }
     else {
-        holder.amountItemTextview.setTextColor(context.getResources().getColor(R.color.green));
+        holder.amountItemTextview.setTextColor(ContextCompat.getColor(context,R.color.green));
     }
 
     holder.openMenuButton.setOnClickListener(v->{
@@ -70,6 +66,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
     });
     }
 
+    @SuppressLint("NonConstantResourceId")
     private boolean mainMenuItemClick(MenuItem item, Expense expense) {
         switch (item.getItemId()) {
             case R.id.edit_expense:  {
@@ -93,32 +90,22 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
         Button saveButton = dialog.findViewById(R.id.saveButton);
         RadioButton debitButton = dialog.findViewById(R.id.debitButton);
         RadioButton creditButton = dialog.findViewById(R.id.creditButton);
-
+        assert amountEditText != null;
         amountEditText.setText(String.valueOf(expense.getAmount()));
+        assert noteEditText != null;
         noteEditText.setText(String.valueOf(expense.getNote()));
-
         if(expense.getTransactionType() == 1){
+            assert debitButton != null;
             debitButton.setChecked(true);
         }
         else if(expense.getTransactionType() == 0){
+            assert creditButton != null;
             creditButton.setChecked(true);
         }
-
         assert saveButton != null;
         saveButton.setOnClickListener(v1 -> {
-            int transactionType;
-            int amount = Integer.parseInt(amountEditText.getText().toString());
-            Boolean transactionTypeBoolean = debitButton.isChecked();
-            if(transactionTypeBoolean){
-                transactionType = 1;
-            }
-            else {
-                transactionType = 0;
-            }
-            if(transactionType == 1){
-                amount = -amount;
-            }
-            databaseHelper.updateExpense(new Expense(expense.getId(),amount,noteEditText.getText().toString(),transactionType));
+            assert debitButton != null;
+            databaseHelper.updateExpense(new Expense(expense.getId(),Integer.parseInt(amountEditText.getText().toString()),noteEditText.getText().toString(),debitButton.isChecked() ? 1 : 0));
             dialog.dismiss();
         });
         dialog.show();
@@ -132,6 +119,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
         return expenseArrayList.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void updateData(ArrayList<Expense> newExpense) {
         this.expenseArrayList = newExpense;
         notifyDataSetChanged();
@@ -141,7 +129,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
         totalTextView.setText(text);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView amountItemTextview,noteItemTextview;
         Button openMenuButton;

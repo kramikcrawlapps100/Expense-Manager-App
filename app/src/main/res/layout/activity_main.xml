@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,16 +8,20 @@
     android:weightSum="2"
     tools:context=".MainActivity">
 
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
+        android:name="com.example.expensemanagerapp.fragments.InsertFragment"
         android:id="@+id/add_expenses_fragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        tools:layout="@layout/fragment_insert" />
 
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
+        android:name="com.example.expensemanagerapp.fragments.ListFragment"
         android:id="@+id/show_expenses_fragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        tools:layout="@layout/fragment_list" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

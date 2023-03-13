@@ -7,8 +7,6 @@ public class Expense {
     public static final String COLUMN_AMOUNT = "amount";
     public static final String COLUMN_NOTE = "note";
     public static final String COLUMN_TRANSACTIONTYPE = "transactionType";
-
-    // Create table SQL query
     public static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -16,8 +14,6 @@ public class Expense {
                     + COLUMN_NOTE + " TEXT,"
                     + COLUMN_TRANSACTIONTYPE + " INTEGER"
                     + ")";
-
-
     private int id;
     private int amount;
     private String note;
