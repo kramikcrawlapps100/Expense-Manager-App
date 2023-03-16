@@ -6,9 +6,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.BaseColumns;
 
-import com.example.expensemanagerapp.provider.MyContentProvider;
+import com.example.expensemanagerapp.MyContentProvider;
 import com.example.expensemanagerapp.model.Expense;
 
 import java.util.ArrayList;

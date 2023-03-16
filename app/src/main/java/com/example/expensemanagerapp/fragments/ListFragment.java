@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.expensemanagerapp.provider.MyContentProvider;
+import com.example.expensemanagerapp.MyContentProvider;
 import com.example.expensemanagerapp.adapter.ExpenseAdapter;
 import com.example.expensemanagerapp.database.DatabaseHelper;
 import com.example.expensemanagerapp.databinding.FragmentListBinding;

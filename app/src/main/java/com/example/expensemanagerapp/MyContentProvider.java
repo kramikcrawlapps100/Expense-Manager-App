@@ -1,4 +1,4 @@
-package com.example.expensemanagerapp.provider;
+package com.example.expensemanagerapp;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;

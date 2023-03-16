@@ -1,66 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_margin="10dp"
+    android:layout_marginTop="8dp"
     tools:context=".fragments.InsertFragment">
 
     <TextView
+        android:id="@+id/amountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"
+        android:text="@string/amount"
         android:textColor="@color/black"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:text="@string/amount" />
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/amountEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:inputType="numberDecimal"
-        android:paddingStart="5dp"
         android:background="@drawable/edittext_background"
-        android:hint="@string/enter_your_amount" />
+        android:hint="@string/enter_your_amount"
+        android:inputType="numberDecimal"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/amountTextView" />
 
     <TextView
+        android:id="@+id/noteTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"
+        android:text="@string/note"
         android:textColor="@color/black"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:text="@string/note" />
+        android:layout_margin="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/amountEditText" />
 
     <EditText
         android:id="@+id/noteEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:inputType="text"
-        android:paddingStart="5dp"
         android:background="@drawable/edittext_background"
-        android:hint="@string/write_here" />
+        android:hint="@string/write_here"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noteTextView" />
+
 
     <TextView
+        android:id="@+id/transactionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"
+        android:text="@string/transaction_type"
         android:textColor="@color/black"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:text="@string/transaction_type" />
+        android:layout_margin="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noteEditText" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -69,16 +82,17 @@
         android:layout_gravity="center"
         android:orientation="horizontal"
         android:weightSum="2"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp">
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/transactionTextView">
 
         <RadioButton
             android:id="@+id/debitButton"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
+            android:layout_weight="1"
             android:checked="true"
             android:paddingStart="5dp"
             android:text="@string/debit"
@@ -87,9 +101,9 @@
         <RadioButton
             android:id="@+id/creditButton"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
+            android:layout_weight="1"
             android:checked="false"
             android:paddingStart="5dp"
             android:text="@string/credit"
@@ -99,10 +113,12 @@
 
     <Button
         android:id="@+id/saveButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save"
-        android:onClick="onClickSaveButton"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
